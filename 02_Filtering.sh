@@ -26,7 +26,7 @@ cutadapt -a CTGTCTCTTATACACATCT -A CTGTCTCTTATACACATCT --nextseq-trim=30 --minim
 /storage/users/ccuffe22/atac/raw_data/X204SC23050247-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HF35WDSX7_L3_2.fq.gz
 
 #SM read1 & 2
-cutadapt -a CTGTCTCTTATACACATCT -A CTGTCTCTTATACACATCT\
+cutadapt -a CTGTCTCTTATACACATCT -A CTGTCTCTTATACACATCT \
 --nextseq-trim=30 \
 --minimum-length=25 \
 --max-n 0 \
@@ -47,4 +47,4 @@ fastqc /storage/users/ccuffe22/atac/data/03.pre-processing/trimmed_WB135313_SM_1
 fastqc /storage/users/ccuffe22/atac/data/03.pre-processing/trimmed_WB135313_SM_2.fq.gz
 multiqc -n -f adaptor_removal_multiqc /storage/users/ccuffe22/atac/data/03.pre-processing/
 
-conda deactivate 
+conda deactivate
