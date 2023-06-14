@@ -8,6 +8,9 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1 #Change depending on CPU requirements
 
+module load apps/anaconda-4.7.12.tcl
+eval "$(conda shell.bash hook)"
+conda activate align 
 
 #Load BWA app
 module load apps/bwa-0.7.10.tcl
@@ -16,7 +19,7 @@ module load apps/bwa-0.7.10.tcl
 bwa index "/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.fa.gz"
 
 #Index ref with samtools
-apps/samtools-1.9.tcl  faidx "/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.fa.gz"
+samtools  faidx "/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.fa.gz"
 
 #Load java
 module load apps/java-8u151.tcl
@@ -32,3 +35,5 @@ O=/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.dict
 java -jar apps/picard-2.22.0.tcl  SortVcf I="/storage/users/ccuffe22/references/equus_caballus_incl_consequences.vcf.gz" \
 O=/storage/users/ccuffe22/references/equcab_incl_consequences_sorted.vcf \
 SEQUENCE_DICTIONARY=/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.dict
+
+conda deactivate
