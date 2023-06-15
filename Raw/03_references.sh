@@ -4,9 +4,9 @@
 #SBATCH --output=/storage/users/ccuffe22/atac/logfiles/filtering_%j.log
 #SBATCH --mail-user=ccuffe22@rvc.ac.uk
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=3gb #Change this depending on memory requirements
+#SBATCH --mem=24gb #Change this depending on memory requirements
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1 #Change depending on CPU requirements
+#SBATCH --cpus-per-task=4 #Change depending on CPU requirements
 
 module load apps/anaconda-4.7.12.tcl
 eval "$(conda shell.bash hook)"
