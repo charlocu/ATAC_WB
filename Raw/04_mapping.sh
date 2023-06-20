@@ -22,8 +22,20 @@ bwa mem "/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.topleve
   "/storage/users/ccuffe22/atac/data/03.pre-processing/trimmed_WB135313_SM_2.fq.gz" \
   -t [8] -M | samtools sort -o "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.bam" \
   -O bam -T "/storage/users/ccuffe22/temp"
+samtools flagstat "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.bam" \
+> "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.stats"
+
+#for sample #2 now, SCDM  
+  bwa mem "/storage/users/ccuffe22/references/Equus_caballus.EquCab3.0.dna.toplevel.fa.gz" \
+  "/storage/users/ccuffe22/atac/data/03.pre-processing/trimmed_WB135313_SCDM_1.fq.gz" \
+  "/storage/users/ccuffe22/atac/data/03.pre-processing/trimmed_WB135313_SCDM_2.fq.gz" \
+  -t [8] -M | samtools sort -o "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam" \
+  -O bam -T "/storage/users/ccuffe22/temp"
+samtools flagstat "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam" \
+> "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.stats"
 
 #Samtools indexing
-samtools index "/storage/users/ccuffe22/atac/data/04.mapped/indexed_135313SM.bam"
+samtools index "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.bam"
+samtools index "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam"
 
 conda deactivate
