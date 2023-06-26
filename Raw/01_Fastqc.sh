@@ -18,3 +18,5 @@ fastqc /X204SC23050247-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342
 fastqc /X204SC23050247-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HF35WDSX7_L3_2.fq
 
 #View html outputs manually
+#module load multiqc may or may not work
+multiqc /storage/users/ccuffe22/atac/raw_data/X204SC23050247-Z01-F001/01.RawData/

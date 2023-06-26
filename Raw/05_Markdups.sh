@@ -15,7 +15,7 @@ module load apps/java-8u151.tcl
 module load apps/anaconda-4.7.12.tcl
 eval "$(conda shell.bash hook)"
 
-#enviro with samtools
+#enviro containing samtools
 conda activate align 
 
 #Load picard and markdup
@@ -34,3 +34,6 @@ java -jar apps/picard-2.22.0.tcl MarkDuplicates \
       samtools flagstat "/storage/users/ccuffe22/atac/data/04.mapped/MD_135313SCDM.bam" \
 > "/storage/users/ccuffe22/atac/data/04.mapped/MD_135313SCDM.stats"
 
+#index again the newest file
+samtools index "/storage/users/ccuffe22/atac/data/04.mapped/MD_135313SM.bam"
+samtools index "/storage/users/ccuffe22/atac/data/04.mapped/MD_135313SCDM.bam"

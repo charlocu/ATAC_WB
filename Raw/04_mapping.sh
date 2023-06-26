@@ -34,7 +34,7 @@ samtools flagstat "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.b
 samtools flagstat "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam" \
 > "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.stats"
 
-#Samtools indexing
+#Samtools indexing of the new files
 samtools index "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SM.bam"
 samtools index "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam"
 

@@ -40,7 +40,8 @@ cutadapt -a CTGTCTCTTATACACATCT -A CTGTCTCTTATACACATCT \
 /storage/users/ccuffe22/atac/raw_data/X204SC23050247-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HF35WDSX7_L3_2.fq.gz
 
 conda deactivate 
-#conda activate multiqc
+#conda activate multiqc 
+#commented out cause was having issues with multiqc and conda
 
 #fastqc of the above
 module load apps/fastqc-0.11.9.tcl
