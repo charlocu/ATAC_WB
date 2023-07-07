@@ -39,6 +39,7 @@ mkdir -p /storage/users/ccuffe22/atac/data/08.hmmratac
 #-o "/storage/users/ccuffe22/atac/data/08.hmmratac/$i"
 #done
 
+unset PYTHONPATH
 #To start going to jusdge the cut-off values for the analysis (nucleosome length etc)
 #Can pool multiple samples together by naming them altogether in the -b arguement with spaces in between
 conda activate MACS
