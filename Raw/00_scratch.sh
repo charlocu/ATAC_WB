@@ -32,3 +32,18 @@ for i in "${names[@]}"; do
 #samtools index  "/storage/users/ccuffe22/atac/data/04.mapped/MD_135313SM.bam"
 
 conda deactivate
+#attempt for FRiP
+#for i in 135313SCDM 135313SM; do
+#plotEnrichment -b /storage/users/ccuffe22/atac/data/04.mapped/sorted_$i.bam \
+#--BED /storage/users/ccuffe22/atac/data/09.macs3/test_$i"_peaks.narrowPeak" \
+#-o /storage/users/ccuffe22/atac/data/09.macs3/FRiP_macs3_$i.png --smartLabels -T "Fraction of Reads in Peaks (FRiP), $i" \
+#--outRawCounts /storage/users/ccuffe22/atac/data/09.macs3/enrichment_macs3_$i.tab
+#done
+#conda deactivate
+
+#looking at reads mapped to individual chromosomes
+for i in '/storage/users/ccuffe22/atac/data/04.mapped/*.bam': do
+samtools idxstats $i.bam | awk '{print $1" "$3}'| > /storage/users/ccuffe22/atac/data/04.mapped/$i.info
+echo $i
+done
+conda deactivate
