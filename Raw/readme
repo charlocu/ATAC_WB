@@ -1,0 +1,2 @@
+#scripts below are what was used for carrying out identical QC analysis on low pass (~3 million) and high pass 50/200million reads
+#ran on an hpc using conda to manage environments and packages
