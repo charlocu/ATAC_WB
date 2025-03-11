@@ -9,36 +9,28 @@
 #SBATCH --cpus-per-task=1 #Change depending on CPU requirements
 
 
-
-#first unzip samples
-gunzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_2.fq.gz"
-gunzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_1.fq.gz"
-
-#next SCDM
-gunzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_2.fq.gz"
-gunzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_1.fq.gz"
-
 #Load fastqc app
 module load apps/fastqc-0.11.9.tcl
-#Run fastqc
-#first SM
-fastqc "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_2.fq"
-fastqc "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_1.fq"
 
-#next SCDM
-fastqc "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_2.fq"
-fastqc "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_1.fq"
+# Define the parent directory containing your folders
+PARENT_DIR="/storage/users/ccuffe22/atac/raw_high_pass/X204SC24100513-Z01-F001_01/01.RawData/"
+
+# Loop over each folder in the parent directory
+for file in "$PARENT_DIR"*/; do
+    echo "Processing folder: $file"
+    
+    # Run FastQC on all fastq files in the folder
+    fastqc "$file"*.fq.gz -o "$file"
+    
+done
 
 #View html outputs manually
+#admin stuff to make conda environments work
+#module load apps/anaconda-4.7.12.tcl
+#eval "$(conda shell.bash hook)"
+#conda activate multiqc
 #module load multiqc
-#multiqc /storage/users/ccuffe22/atac/raw_high_pass/$i/
+#multiqc /storage/users/ccuffe22/atac/raw_high_pass/
+#conda deactivate
 
-#lastly rezip samples
-gzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_2.fq.gz"
-gzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SM/WB135313_SM_EKDL230007342-1A_HG3GNDSX7_L3_1.fq.gz"
-
-#next SCDM
-gzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_2.fq.gz"
-gzip "/storage/users/ccuffe22/atac/raw_high_pass/X204SC23092804-Z01-F001/01.RawData/WB135313_SCDM/WB135313_SCDM_EKDL230007343-1A_HG25KDSX7_L3_1.fq.gz"
-
-echo 'done'
+#echo 'done'

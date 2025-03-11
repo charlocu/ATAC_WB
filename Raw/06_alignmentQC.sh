@@ -8,6 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1 #Change depending on CPU requirements
 
+##STILL WIP< WILL NOT RUN####
 #module admin 
 module load apps/java-8u151.tcl
 module load apps/anaconda-4.7.12.tcl

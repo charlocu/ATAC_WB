@@ -4,48 +4,54 @@
 #SBATCH --output=/storage/users/ccuffe22/atac/logfiles/HMMRATAC_%j.log
 #SBATCH --mail-user=ccuffe22@rvc.ac.uk
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=12gb #Change this depending on memory requirements
+#SBATCH --mem=30gb #Change this depending on memory requirements
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3 #Change depending on CPU requirements
 
 #To make conda enviro's work
 module load apps/anaconda-4.7.12.tcl
 eval "$(conda shell.bash hook)"
-
-module load apps/java-8u151.tcl
-
-
-#enviro with samtools
-#conda activate align 
-mkdir -p /storage/users/ccuffe22/atac/data/08.hmmratac
-
-#this is the old HMMRATAC, so going to comment it all out but it is the first thing I tried
-
-#should already have the bam straight from the aligner (here in 04. data file)
-#This bam should be sorted and have an index made
-#next step is step 3 of file prep
-#Genome information file for chromosome sizes
-#samtools view -H "/storage/users/ccuffe22/atac/data/04.mapped/sorted_135313SCDM.bam" |\
-#perl -ne 'if(/^@SQ.*?SN:(\w+)\s+LN:(\d+)/){print $1,"\t",$2,"\n"}' \
-#> "/storage/users/ccuffe22/atac/data/08.hmmratac/genome.info"
-
-#conda deactivate
-#now to begin the actual peak calling
-#for i in 135313SCDM 135313SM; do
-#java -jar "/storage/users/ccuffe22/software/HMMRATAC_V1.2.10_exe.jar" \
-#-b "/storage/users/ccuffe22/atac/data/04.mapped/sorted_$i.bam" \
-#-i "/storage/users/ccuffe22/atac/data/04.mapped/sorted_$i.bam.bai" \
-#-g "/storage/users/ccuffe22/atac/data/08.hmmratac/genome.info" \
-#-o "/storage/users/ccuffe22/atac/data/08.hmmratac/$i"
-#done
-
+module load apps/java-8u151.tcl 
+mkdir -p /storage/users/ccuffe22/atac/data_hp/08.hmmratac
 unset PYTHONPATH
+cd "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/"
+conda activate MACS
+
+#NB Each step to be run separately from each other so different parts of the script will need to be commented out and uncommented depending
+
 #To start going to jusdge the cut-off values for the analysis (nucleosome length etc)
 #Can pool multiple samples together by naming them altogether in the -b arguement with spaces in between
-conda activate MACS
-for i in 135313SCDM 135313SM; do
-macs3 hmmratac --cutoff-analysis-only -b "/storage/users/ccuffe22/atac/data/04.mapped/sorted_$i.bam" \
---outdir "/storage/users/ccuffe22/atac/data/08.hmmratac/" \
--n "$i_cutoff_analysis" 
+for i in $(ls filtered_*.bam);do echo $i;
+macs3 hmmratac --cutoff-analysis-only -b "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/$i"  \
+--outdir "/storage/users/ccuffe22/atac/data_hp/08.hmmratac/" \
+-n individual_hp_$i
 done
+
+#then run the programme to begin finetunning cutoffs
+#macs3 hmmratac -b "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/filtered_135313_SCDM.bam" "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/filtered_135313_SM.bam" \
+#--outdir "/storage/users/ccuffe22/atac/data_hp/08.hmmratac/" \
+#-u 10000 \
+#-l 1000 \
+#-c 50 \
+#-n combined
+
+
+#trying it with the two samples being called separately
+#for i in SCDM SM; do
+#macs3 hmmratac --cutoff-analysis-only -b  "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/filtered_135313_$i.bam" \
+#--outdir "/storage/users/ccuffe22/atac/data_hp/08.hmmratac/" \
+#-n $i 
+#done
+
+
+#peak calling for SM and SCDM sample separately
+#for i in $(ls rmvdups_*.bam); do echo $i; 
+#macs3 hmmratac -b "/storage/users/ccuffe22/atac/data_hp/07.rmvdups/filtered_135313_$i.bam" \
+#--outdir "/storage/users/ccuffe22/atac/data_hp/08.hmmratac/" \
+#-u 10000 \
+#-l 1000 \
+#-c 50 \
+#-n $i
+#done
+
 conda deactivate
